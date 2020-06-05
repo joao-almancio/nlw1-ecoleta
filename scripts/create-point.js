@@ -5,6 +5,8 @@ const stateInput = document.querySelector('input[name=state]');
 const itemsToCollect = document.querySelectorAll('.items-grid li');
 const itemsInput = document.querySelector('input[name=items]');
 
+const buttonSubmit = document.querySelector('button #submit');
+
 const url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados"
 
 function populateUFs() {
