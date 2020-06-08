@@ -1,50 +1,42 @@
-const sqlite3 = require('sqlite3').verbose();
+/* eslint-disable array-element-newline */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable no-unused-vars */
 
-const db = new sqlite3.Database('./src/database/database.db');
+const sqlite3 = require("sqlite3").verbose();
 
-db.serialize(() => {
-    db.run(`
-        CREATE TABLE IF NOT EXISTS places (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            image TEXT,
-            name TEXT,
-            address TEXT,
-            number TEXT,
-            state TEXT,
-            city TEXT,
-            items TEXT
-        );
-    `);
+const db = new sqlite3.Database("./src/database/database.db");
 
-    const query = `
-        INSERT INTO places (
-            image,
-            name,
-            address,
-            number,
-            state,
-            city,
-            items
-        ) VALUES (?, ?, ?, ?, ?, ?, ?);
-    `
-    const values = [
-        "https://images.unsplash.com/photo-1503596476-1c12a8ba09a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80",
-        "Guilherme",
-        "Rua tomoichi Shimizu",
-        "123",
-        "Santa Catarina",
-        "Rio do Sul",
-        "Resíduos Eletrônicos, Lampadas"
-    ];
+module.exports = db;
 
-    function afterInsertData(err) {
-        if (err) {
-            return console.log(err);
-        }
+// db.serialize(() => {
+//   // Para criar uma tabela
+//   // db.run("CREATE TABLE IF NOT EXISTIS nomeDaTabela (id INTEGER PRIMARY KEY AUTOINCREMENT, nomeDaColuna1 tipoDeDado, nomeDaColuna2 tipoDeDado, ...)")
+//   // *** O úlimo dado não seve ser acompanhado por vírgula.
+//   db.run(`
+//         CREATE TABLE IF NOT EXISTS places (
+//             id INTEGER PRIMARY KEY AUTOINCREMENT,
+//             image TEXT,
+//             name TEXT,
+//             address TEXT,
+//             number TEXT,
+//             state TEXT,
+//             city TEXT,
+//             items TEXT
+//         );
+//     `);
+//   // Para BUSCAR TODOS os item de uma tabela
+//   // db.all("SELECT * FROM nomeDaTabela", function (err, rows){})
+//   // ** O argumento rows contém o retorno da sua Query devolve um conjunto/array de dados.
 
-        console.log("Cadastrado com sucesso.");
-        console.log(this);
-    }
+//   // Para BUSCAR um item específico da tabela
+//   // db.run("SELECT nomeDaColuna FROM nomeDaTabela WHERE parametroDeBusca = ?", [valorDoParametroDeBusca], function (err){})
 
-    db.run(query, values, afterInsertData);
-})
+//   // Para ADICIONAR um item a uma tabela
+//   // db.run("INSERT INTO nomeDaTabela (nomeDaColuna1, nomeDaColuna2, ... ) VALUES (?, ?, ... )", [valorDaColuna1, valorDaColuna2, ...], function (err){})
+
+//   // Para DELETAR uma linha específica da tabela
+//   // db.run("DELETE FROM nomeDaTabela WHERE parametroDeBusca = ?", [valorDoParametroDeBusca], function (err){})
+
+//   // Para ATUALIZAR um dado específico da tabela
+//   // db.run("UPDATE nomeDaTabela SET nomeDaColuna = ? WHERE parametroDeBusca = ?", [novoValor, valorDoParametroDeBusca], function (err){})
+// });

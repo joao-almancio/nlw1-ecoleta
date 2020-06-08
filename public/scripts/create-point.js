@@ -1,3 +1,6 @@
+/* eslint-disable max-statements */
+
+
 const ufSelect = document.querySelector('select[name=uf]');
 const citySelect = document.querySelector('select[name=city]');
 const stateInput = document.querySelector('input[name=state]');
@@ -5,14 +8,14 @@ const stateInput = document.querySelector('input[name=state]');
 const itemsToCollect = document.querySelectorAll('.items-grid li');
 const itemsInput = document.querySelector('input[name=items]');
 
-const buttonSubmit = document.querySelector('button #submit');
+// const buttonSubmit = document.querySelector('button #submit');
 
 const url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados"
 
 function populateUFs() {
-    fetch(url)
-    .then(res => res.json())
-    .then(data => {
+    fetch(url).
+    then((res) => res.json()).
+    then((data) => {
         for (const state of data) {
             ufSelect.innerHTML += `<option value="${state.id}">${state.sigla}</option>`;
         }
@@ -30,10 +33,10 @@ function getCities(event) {
     citySelect.innerHTML = '<option value>Selecione a Cidade</option>';
     citySelect.disabled = true;
 
-    fetch(cityURL)
-    .then(res => res.json())
-    .then(data => {
-        
+    fetch(cityURL).
+    then((res) => res.json()).
+    then((data) => {
+
         for (const city of data) {
             citySelect.innerHTML += `<option value="${city.nome}">${city.nome}</option>`;
         }
@@ -43,10 +46,6 @@ function getCities(event) {
 
 ufSelect.addEventListener("change", getCities)
 
-for (let item of itemsToCollect) {
-    item.addEventListener('click', handleSelectedItem)
-}
-
 let selectedItems = [];
 
 function handleSelectedItem(event) {
@@ -55,16 +54,19 @@ function handleSelectedItem(event) {
 
     itemLi.classList.toggle('selected')
 
-    const alreadySelected = selectedItems.findIndex(item => item == itemId)
-    console.log(alreadySelected);
+    const alreadySelected = selectedItems.findIndex((item) => item === itemId)
 
-    if (alreadySelected == -1) {
+    if (alreadySelected === -1) {
         selectedItems.push(itemId);
 
     } else {
-        let filteredItems = selectedItems.filter(item => item != itemId)
+        const filteredItems = selectedItems.filter((item) => item !== itemId)
         selectedItems = filteredItems;
     }
 
     itemsInput.value = selectedItems;
+}
+
+for (const item of itemsToCollect) {
+  item.addEventListener('click', handleSelectedItem)
 }
